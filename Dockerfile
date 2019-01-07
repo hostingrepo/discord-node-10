@@ -29,7 +29,7 @@ RUN apt -y install openjdk-8-jdk
     # Python 2 & 3
 RUN add-apt-repository -y ppa:deadsnakes/ppa \
     && apt update \
-    && apt -y install python3.7 python2.6
+    && apt -y install python3.7 python3.6 python2.6
 
     # C Sharp & .NET
 RUN apt -y install mono-runtime
