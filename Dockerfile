@@ -1,4 +1,4 @@
-FROM ubuntu:16.04
+FROM ubuntu:18.04
 
 MAINTAINER David Razdolski, <admin@unreliable.site>
 
@@ -25,7 +25,9 @@ RUN add-apt-repository -y ppa:ondrej/php \
 RUN apt -y install openjdk-8-jdk
 
     # Python 2 & 3
-RUN apt -y install python python3
+RUN add-apt-repository -y ppa:deadsnakes/ppa \
+    && apt update \
+    && apt -y install python3.7 python2.6
 
     # C Sharp & .NET
 RUN apt -y install mono-runtime
@@ -40,5 +42,6 @@ ENV  HOME /home/container
 WORKDIR /home/container
 
 COPY ./entrypoint.sh /entrypoint.sh
+COPY ./bashrc /home/container/.bashrc
 
 CMD ["/bin/bash", "/entrypoint.sh"]
