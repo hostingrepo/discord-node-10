@@ -1,4 +1,4 @@
-FROM ubuntu:16.04
+FROM ubuntu:18.04
 
 MAINTAINER David Razdolski, <admin@unreliable.site>
 
@@ -13,8 +13,10 @@ ENV LANG en_US.UTF-8
 ENV LC_ALL en_US.UTF-8
 
     # NodeJS
-RUN curl -sL https://deb.nodesource.com/setup_10.x | bash - \
-    && apt -y install nodejs
+RUN curl https://raw.githubusercontent.com/creationix/nvm/master/install.sh | bash \
+    && source ~/.profile \
+    && nvm install 10.15.0 \
+    && nvm install 8.15.0
 
     # PHP 7.2
 RUN add-apt-repository -y ppa:ondrej/php \
@@ -25,7 +27,9 @@ RUN add-apt-repository -y ppa:ondrej/php \
 RUN apt -y install openjdk-8-jdk
 
     # Python 2 & 3
-RUN apt -y install python python3
+RUN add-apt-repository -y ppa:deadsnakes/ppa \
+    && apt update \
+    && apt -y install python3.7 python3.6 python2.6
 
     # C Sharp & .NET
 RUN apt -y install mono-runtime
@@ -40,5 +44,6 @@ ENV  HOME /home/container
 WORKDIR /home/container
 
 COPY ./entrypoint.sh /entrypoint.sh
+COPY ./bashrc /home/container/.bashrc
 
 CMD ["/bin/bash", "/entrypoint.sh"]
