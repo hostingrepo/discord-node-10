@@ -13,8 +13,9 @@ ENV LANG en_US.UTF-8
 ENV LC_ALL en_US.UTF-8
 
     # NodeJS
-RUN curl -sL https://deb.nodesource.com/setup_10.x | bash - \
-    && apt -y install nodejs
+RUN curl https://raw.githubusercontent.com/creationix/nvm/master/install.sh | bash && \
+    source ~/.profile && \
+    nvm install 10.15.0
 
     # PHP 7.2
 RUN add-apt-repository -y ppa:ondrej/php \
